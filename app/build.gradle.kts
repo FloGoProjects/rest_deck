@@ -39,7 +39,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
-            signingConfig = signingConfigs.getByName("release")
+            // Ohne Schlüssel (z. B. frischer Klon) unsignierte Release-APK statt Build-Abbruch
+            signingConfig = if (signingProps.isNotEmpty()) signingConfigs.getByName("release") else null
         }
     }
 
