@@ -1,0 +1,77 @@
+{
+  "app": "RestDeck",
+  "purpose": "Aktionen per Knopfdruck auslösen: konfigurierbare Buttons, jeder feuert eine Liste konfigurierbarer REST-Calls ins lokale Netz.",
+  "device": "Fairphone 5 5G",
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "Beliebig viele Buttons anlegen, umbenennen, einfärben, löschen, sortieren."
+    },
+    {
+      "id": "R2",
+      "text": "Jeder Button hat eine Liste von REST-Calls (anlegen, bearbeiten, löschen, duplizieren)."
+    },
+    {
+      "id": "R3",
+      "text": "Ein Call hat: Name, Methode (GET/POST/PUT/PATCH/DELETE/HEAD), URL, Header-Liste, Body (Text), Timeout pro Call."
+    },
+    {
+      "id": "R4",
+      "text": "Drücken eines Buttons feuert ALLE seine Calls parallel. Ein fehlschlagender Call beeinflusst die anderen nicht."
+    },
+    {
+      "id": "R5",
+      "text": "Antworten werden nur geloggt: Zeit, Button, Call, Methode, URL, Status, Dauer, Antwort-Body (gekürzt) bzw. Fehlertext. Log ansehen und leeren."
+    },
+    {
+      "id": "R6",
+      "text": "Nur lokales Netz: Ziel-Host muss auf private/lokale Adressen auflösen (10/8, 172.16/12, 192.168/16, 127/8, 169.254/16, IPv6 ULA/link-local/loopback). Sonst Abbruch mit Fehler im Log."
+    },
+    {
+      "id": "R7",
+      "text": "Cleartext-HTTP erlaubt (lokale Geräte haben selten TLS); Schutz durch R6."
+    },
+    {
+      "id": "R8",
+      "text": "Buttons auf den Homescreen legen (angeheftete Shortcuts); Auslösen ohne App-UI, Ergebnis als kurzer Toast."
+    },
+    {
+      "id": "R9",
+      "text": "Daten nur lokal (JSON-Datei in filesDir). Kein Export/Import."
+    },
+    {
+      "id": "R10",
+      "text": "Hypermodernes Design: dunkel, Verläufe, große Kacheln, Animation/Haptik beim Auslösen."
+    },
+    {
+      "id": "R11",
+      "text": "Grafikstil umschaltbar: Modern (Standard), Viktorianisch/Steampunk, Schlicht (hell, flach), Terminal (Retro). Wirkt auf alle Bildschirme und auf neu erzeugte Homescreen-Icons."
+    },
+    {
+      "id": "R12",
+      "text": "Eigenes Foto als Hintergrund wählbar (System-Fotoauswahl, keine Speicher-Berechtigung). Foto wird verkleinert in filesDir kopiert (bleibt, auch wenn das Original gelöscht wird). Entfernen jederzeit möglich."
+    },
+    {
+      "id": "R13",
+      "text": "Foto-Hintergrund konfigurierbar: Abdunkeln (0–85 %, Standard 60 %) und Weichzeichnen (ab Android 12)."
+    },
+    {
+      "id": "R14",
+      "text": "Alle eingebauten Stile erfüllen Kontrast: Text auf Hintergrund und Karte >= 4.5:1, Nebentext >= 3:1, Kachel-Text auf beiden Verlaufsenden >= 3:1 (großer fetter Text). Per Unit-Test geprüft."
+    }
+  ],
+  "decisions": [
+    "Erfolg = HTTP-Status 200–399; alles andere oder Exception = Fehler.",
+    "Log hält die letzten 300 Einträge; Body wird auf 4000 Zeichen gekürzt.",
+    "Body ohne Content-Type-Header: beginnt mit { oder [ -> application/json, sonst text/plain; charset=utf-8.",
+    "targetSdk 37: Runtime-Permission ACCESS_LOCAL_NETWORK (Gruppe NEARBY_DEVICES) nötig, nur ab API 37 anfragen. Shortcut-Auslösung ohne UI kann nicht fragen -> Toast mit Hinweis, App öffnen.",
+    "Homescreen v1 = Pinned Shortcuts (keine Widgets).",
+    "HTTP-Client: HttpURLConnection (keine Zusatz-Abhängigkeit). Redirects nicht automatisch folgen.",
+    "Stile sind reine Daten in domain/Styles.kt (ARGB-Longs), UI liest sie über CompositionLocal. Alle Stile haben gleich viele Farbfelder, damit ActionButton.color in jedem Stil gültig bleibt.",
+    "Nur Systemschriften (Sans, Serif, Monospace) – keine gebündelten Fonts in v1.1.",
+    "Einstellungen in settings.json, getrennt vom Deck; unbekannte Stil-ID -> Modern."
+  ],
+  "open": [
+    "Android Auto-Backup ist aktiv (Default) – ggf. abschalten, falls Header-Tokens nicht in die Google-Sicherung sollen."
+  ]
+}

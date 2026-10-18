@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- R7: Lokale Geräte sprechen oft nur HTTP. Domain-Configs können keine IP-Bereiche ausdrücken,
+     daher global erlaubt; die Beschränkung aufs lokale Netz erzwingt data/HttpClient.kt (R6). -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

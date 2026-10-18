@@ -1,0 +1,15 @@
+# Build-Ausgaben
+build/
+app/build/
+.gradle/
+.kotlin/
+
+# Rechner-spezifisch
+local.properties
+.idea/
+*.iml
+
+# Release-Schlüssel + Passwörter: NIE ins Repo (separat sichern)
+signing/
+*.jks
+*.keystore
