@@ -14,12 +14,17 @@ Fertige APK: [`dist/RestDeck-1.1.apk`](dist/RestDeck-1.1.apk) aufs Handy laden u
 
 ## Bauen
 
+Voraussetzungen: JDK 17 oder neuer (`JAVA_HOME`), Android SDK mit Plattform 37
+(Pfad über `ANDROID_HOME` oder `local.properties` mit `sdk.dir=…`).
+
 ```
-.\gradlew.bat :app:testDebugUnitTest
-.\gradlew.bat :app:assembleRelease
+./gradlew :app:testDebugUnitTest
+./gradlew :app:assembleDebug
 ```
 
-Der Release-Build braucht `signing/keystore.properties` + Keystore – beides ist absichtlich nicht im Repo.
-Ohne diese Dateien entsteht eine unsignierte Release-APK; zum Ausprobieren reicht `:app:assembleDebug`.
+Unter Windows `gradlew.bat` statt `./gradlew`.
+
+Ein signierter Release-Build (`:app:assembleRelease`) braucht `signing/keystore.properties` + Keystore –
+beides ist absichtlich nicht im Repo. Ohne diese Dateien entsteht eine unsignierte Release-APK.
 
 Anforderungen: [`requirements.json`](requirements.json) · Projekt-Notizen: [`CLAUDE.md`](CLAUDE.md)

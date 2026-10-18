@@ -36,7 +36,7 @@ Antworten nur ins Log. Anforderungen: `requirements.json` (Quelle der Wahrheit).
 - Shortcut simulieren: `adb shell am start -n de.restdeck.app/.trigger.TriggerActivity --es buttonId <id>`
 - Echo-Gegenstelle: `python scripts/echo_server.py 8765`; Handy ohne WLAN: `adb reverse tcp:8765 tcp:8765` + URL `http://127.0.0.1:8765/...`
 - Emulator (Android 17, testet auch ACCESS_LOCAL_NETWORK): `emulator -avd Medium_Phone_API_37.0 -no-window -gpu swiftshader_indirect`, adb mit `-e`. In Git-Bash `MSYS_NO_PATHCONV=1` setzen, sonst werden /sdcard-Pfade verbogen.
-- JDK: Android-Studio-JBR fest in `gradle.properties`.
+- JDK: über `JAVA_HOME` (hier JDK 25). Repo ist öffentlich -> KEINE rechnerspezifischen Pfade in `gradle.properties`.
 
 ## Konventionen
 - Farben/Formen NIE hart kodieren: `Ink.*`, `Palette.*`, `CardShape`/`TileShape`/`PillShape` nutzen (lesen LocalStyle). Kachel-Schrift = `Palette.on(i)`.
